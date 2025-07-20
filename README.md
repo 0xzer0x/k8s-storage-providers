@@ -1,17 +1,17 @@
 ## Overview
 
-[Container Storage Interface (CSI)](https://github.com/container-storage-interface/spec/blob/master/spec.md) is a standard interface for interaction between container orchestrators and storage prviders.
-
-Review the following [list of CSI drivers](https://kubernetes-csi.github.io/docs/drivers.html) for different storage solutions.
+[Container Storage Interface (CSI)](https://github.com/container-storage-interface/spec/blob/master/spec.md) is a standard interface for interaction between container orchestrators and storage prviders. Review the following [list of CSI drivers](https://kubernetes-csi.github.io/docs/drivers.html) for different storage solutions.
 
 When it comes to choosing a storage provider, you can go one of two routes:
 
 - Use your cloud provider's storage solution (suitable for cloud-managed clusters)
 - Use a cloud-agnostic storage provider (suitable for on-premise and self-managed clusters)
 
-This repo provides a starting point for comparing between three of the most famous storage providers for Kubernetes.
+This repo provides a starting point for evaluating different storage providers for Kubernetes.
 
 ## Cluster Preparation
+
+We will be using [Lima](https://lima-vm.io) for provisioning the Kubernetes cluster that we use for testing.
 
 Create and configure cluster:
 
@@ -76,7 +76,7 @@ Important metrics include:
 ## Rook and Ceph
 
 > **Reliable Autonomic Distributed Object Store (RADOS)**
-> 
+>
 > The core storage layer of Ceph. It is a self-healing, self-managing, intelligent distributed store designed to provide reliable, scalable storage.
 
 Ceph uses RADOS as it's underlying storage technology, RADOS stores data as objects rather than blocks or files. Each RADOS object consists of:
@@ -294,6 +294,5 @@ kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers
 - [Longhorn Docs - Architecture](https://longhorn.io/docs/1.9.0/concepts/)
 - [Ceph vs Gluster vs Longhorn vs OpenEBS: Real-World Kubernetes Storage Comparison](https://kubedo.com/kubernetes-storage-comparison/)
 - [OpenEBS Mayastor vs Longhorn](https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/)
-
 
 [^1]: https://openebs.io/docs/quickstart-guide/prerequisites#minimum-worker-node-count
