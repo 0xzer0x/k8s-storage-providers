@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fio
+spec:
+  containers:
+    - name: fio
+      image: nixery.dev/shell/fio
+      command:
+        - sleep
+        - infinity
+      volumeMounts:
+        - name: longhorn-vol
+          mountPath: /longhorn-volume
+        - name: longhorn-v2-vol
+          mountPath: /longhorn-v2-volume
+  volumes:
+    - name: longhorn-vol
+      persistentVolumeClaim:
+        claimName: longhorn-pvc
+    - name: longhorn-v2-vol
+      persistentVolumeClaim:
+        claimName: longhorn-v2-pvc

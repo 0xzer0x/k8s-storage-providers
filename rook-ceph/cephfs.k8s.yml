@@ -1,0 +1,33 @@
+apiVersion: ceph.rook.io/v1
+kind: CephFilesystem
+metadata:
+  name: demofs
+  namespace: rook-ceph
+spec:
+  preserveFilesystemOnDelete: false
+  metadataPool:
+    replicated:
+      size: 1
+      requireSafeReplicaSize: false
+  dataPools:
+    - name: replicated
+      failureDomain: osd
+      replicated:
+        size: 1
+        requireSafeReplicaSize: false
+  metadataServer:
+    activeCount: 1
+    activeStandby: true
+---
+apiVersion: ceph.rook.io/v1
+kind: CephFilesystemSubVolumeGroup
+metadata:
+  name: demofs-csi
+  namespace: rook-ceph
+spec:
+  # NOTE: The name of the subvolume group. If not set, the default is the name of the subvolumeGroup CR.
+  name: csi
+  # NOTE: filesystemName is the metadata name of the CephFilesystem CR where the subvolume group will be created
+  filesystemName: demofs
+  pinning:
+    distributed: 1

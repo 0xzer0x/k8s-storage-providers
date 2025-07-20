@@ -1,0 +1,29 @@
+apiVersion: openebs.io/v1beta3
+kind: DiskPool
+metadata:
+  name: controlplane-pool
+  namespace: openebs
+spec:
+  node: lima-k8s-controlplane
+  disks:
+    - aio:///dev/disk/by-path/pci-0000:00:0a.0
+---
+apiVersion: openebs.io/v1beta3
+kind: DiskPool
+metadata:
+  name: worker-1-pool
+  namespace: openebs
+spec:
+  node: lima-k8s-worker-1
+  disks:
+    - aio:///dev/disk/by-path/pci-0000:00:0a.0
+---
+apiVersion: openebs.io/v1beta3
+kind: DiskPool
+metadata:
+  name: worker-2-pool
+  namespace: openebs
+spec:
+  node: lima-k8s-worker-2
+  disks:
+    - aio:///dev/disk/by-path/pci-0000:00:0a.0

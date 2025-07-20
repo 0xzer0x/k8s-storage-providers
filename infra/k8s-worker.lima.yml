@@ -1,0 +1,108 @@
+cpus: 4
+memory: 6GiB
+disk: 20GiB
+networks:
+  - lima: user-v2
+
+minimumLimaVersion: 1.1.0
+base: template://_images/ubuntu-lts
+# Mounts are disabled in this template, but can be enabled optionally.
+mounts: []
+containerd:
+  system: true
+  user: false
+provision:
+  # See <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      command -v kubeadm >/dev/null 2>&1 && exit 0
+      # Install and configure prerequisites
+      cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+      overlay
+      br_netfilter
+      EOF
+      modprobe overlay
+      modprobe br_netfilter
+      cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+      net.bridge.bridge-nf-call-iptables  = 1
+      net.ipv4.ip_forward                 = 1
+      net.bridge.bridge-nf-call-ip6tables = 1
+      EOF
+      sysctl --system
+      # Installing kubeadm, kubelet and kubectl
+      export DEBIAN_FRONTEND=noninteractive
+      apt-get update
+      apt-get install -y apt-transport-https ca-certificates curl
+      VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt | sed -e 's/v//' | cut -d'.' -f1-2)
+      echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${VERSION}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+      curl -fsSL https://pkgs.k8s.io/core:/stable:/v${VERSION}/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+      apt-get update
+      # cri-tools
+      apt-get install -y cri-tools
+      cat  <<EOF | sudo tee /etc/crictl.yaml
+      runtime-endpoint: unix:///run/containerd/containerd.sock
+      EOF
+      # cni-plugins
+      apt-get install -y kubernetes-cni
+      rm -f /etc/cni/net.d/*.conf*
+      apt-get install -y kubelet kubeadm kubectl && apt-mark hold kubelet kubeadm kubectl
+      systemctl enable --now kubelet
+  # See <https://kubernetes.io/docs/setup/production-environment/container-runtimes/>
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      grep SystemdCgroup /etc/containerd/config.toml && exit 0
+      grep "version = 2" /etc/containerd/config.toml || exit 1
+      # Configuring the systemd cgroup driver
+      # Overriding the sandbox (pause) image
+      cat <<EOF >>/etc/containerd/config.toml
+        [plugins]
+          [plugins."io.containerd.grpc.v1.cri"]
+            sandbox_image = "$(kubeadm config images list | grep pause | sort -r | head -n1)"
+            [plugins."io.containerd.grpc.v1.cri".containerd]
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+                [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                  runtime_type = "io.containerd.runc.v2"
+                  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+                    SystemdCgroup = true
+      EOF
+      systemctl restart containerd
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      if modinfo nvme-tcp &>/dev/null; then exit 0;fi
+      apt install -y linux-modules-extra-$(uname -r)
+      cat <<EOF | sudo tee /etc/modules-load.d/k8s-storage.conf
+      dm_crypt
+      vfio_pci
+      uio_pci_generic
+      nvme-tcp
+      EOF
+      modprobe dm_crypt
+      modprobe vfio_pci
+      modprobe uio_pci_generic
+      modprobe nvme-tcp
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      if grep -q 1024 < <(sysctl vm.nr_hugepages); then exit 0; fi
+      cat <<EOF | sudo tee /etc/sysctl.d/99-k8s-storage.conf
+      vm.nr_hugepages = 1024
+      EOF
+      sysctl --system
+probes:
+  - description: "kubeadm to be installed"
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      if ! timeout 30s bash -c "until command -v kubeadm >/dev/null 2>&1; do sleep 3; done"; then
+        echo >&2 "kubeadm is not installed yet"
+        exit 1
+      fi
+    hint: |
+      See "/var/log/cloud-init-output.log" in the guest
