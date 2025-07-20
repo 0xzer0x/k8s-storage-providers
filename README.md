@@ -1,6 +1,29 @@
+<a name="readme-top"></a>
+
+<p align="center">
+  <img alt="banner" src="assets/k8s-logo.png" width="200" />
+</p>
+
+<h2 align="center">K8s Storage Providers Evaluation Guide</h2>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#cluster-preparation">Cluster Preparation</a></li>
+    <li><a href="#rook-and-ceph">Rook and Ceph</a></li>
+    <li><a href="#longhorn">Longhorn</a></li>
+    <li><a href="#openebs">OpenEBS</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</details>
+
 ## Overview
 
-[Container Storage Interface (CSI)](https://github.com/container-storage-interface/spec/blob/master/spec.md) is a standard interface for interaction between container orchestrators and storage prviders. Review the following [list of CSI drivers](https://kubernetes-csi.github.io/docs/drivers.html) for different storage solutions.
+<a name="overview"></a>
+
+[Container Storage Interface (CSI)](https://github.com/container-storage-interface/spec/blob/master/spec.md) is a standard interface for interaction between container orchestrators and storage providers. Review the following [list of CSI drivers](https://kubernetes-csi.github.io/docs/drivers.html) for different storage solutions.
 
 When it comes to choosing a storage provider, you can go one of two routes:
 
@@ -9,7 +32,11 @@ When it comes to choosing a storage provider, you can go one of two routes:
 
 This repo provides a starting point for evaluating different storage providers for Kubernetes.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Cluster Preparation
+
+<a name="cluster-preparation"></a>
 
 We will be using [Lima](https://lima-vm.io) for provisioning the Kubernetes cluster that we use for testing.
 
@@ -73,7 +100,11 @@ Important metrics include:
 - **Write bandwidth**: Total amount of data written per second.
 - **Completion latency (`clat`)**: Time taken by kernel and storage stack to complete the I/O.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Rook and Ceph
+
+<a name="rook-and-ceph"></a>
 
 > **Reliable Autonomic Distributed Object Store (RADOS)**
 >
@@ -173,7 +204,11 @@ kubectl -n rook-ceph port-forward svc/rook-ceph-mgr-dashboard 7000:7000 &>/dev/n
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 -d
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Longhorn
+
+<a name="longhorn"></a>
 
 Longhorn is an open-source, cloud-native solution for storage. It consists of the following components:
 
@@ -229,7 +264,11 @@ kubectl apply -f storage-providers/longhorn/pvc-v2.k8s.yml
 kubectl port-forward -n longhorn-system svc/longhorn-frontend 8080 &>/dev/null &
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## OpenEBS
+
+<a name="openebs"></a>
 
 [OpenEBS](https://openebs.io/docs) is a Kubernetes-native storage solution that provides dynamic local and distributed block storage for containers. It is a CNCF sandbox project that allows Kubernetes users to provision Persistent Volumes (PVs) using Container Attached Storage (CAS) principles.
 
@@ -287,7 +326,11 @@ kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers
 kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers/openebs/pvc.k8s.yml
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## References
+
+<a name="references"></a>
 
 - [Introduction to Ceph - Sage Weil](https://www.youtube.com/watch?v=PmLPbrf-x9g)
 - [Ceph Docs - Architecture](https://docs.ceph.com/en/latest/architecture/)
@@ -296,3 +339,5 @@ kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers
 - [OpenEBS Mayastor vs Longhorn](https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/)
 
 [^1]: https://openebs.io/docs/quickstart-guide/prerequisites#minimum-worker-node-count
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
