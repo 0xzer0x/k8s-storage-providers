@@ -75,7 +75,8 @@ Important metrics include:
 
 ## Rook and Ceph
 
-> [!NOTE] Reliable Autonomic Distributed Object Store (RADOS)
+> **Reliable Autonomic Distributed Object Store (RADOS)**
+> 
 > The core storage layer of Ceph. It is a self-healing, self-managing, intelligent distributed store designed to provide reliable, scalable storage.
 
 Ceph uses RADOS as it's underlying storage technology, RADOS stores data as objects rather than blocks or files. Each RADOS object consists of:
@@ -286,14 +287,13 @@ kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers
 kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers/openebs/pvc.k8s.yml
 ```
 
-## Footnotes
-
-[1]: https://openebs.io/docs/quickstart-guide/prerequisites#minimum-worker-node-count
-
 ## References
 
-[Introduction to Ceph - Sage Weil](https://www.youtube.com/watch?v=PmLPbrf-x9g)
-[Ceph Docs - Architecture](https://docs.ceph.com/en/latest/architecture/)
-[Longhorn Docs - Architecture](https://longhorn.io/docs/1.9.0/concepts/)
-[Ceph vs Gluster vs Longhorn vs OpenEBS: Real-World Kubernetes Storage Comparison](https://kubedo.com/kubernetes-storage-comparison/)
-[OpenEBS Mayastor vs Longhorn](https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/)
+- [Introduction to Ceph - Sage Weil](https://www.youtube.com/watch?v=PmLPbrf-x9g)
+- [Ceph Docs - Architecture](https://docs.ceph.com/en/latest/architecture/)
+- [Longhorn Docs - Architecture](https://longhorn.io/docs/1.9.0/concepts/)
+- [Ceph vs Gluster vs Longhorn vs OpenEBS: Real-World Kubernetes Storage Comparison](https://kubedo.com/kubernetes-storage-comparison/)
+- [OpenEBS Mayastor vs Longhorn](https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/)
+
+
+[^1]: https://openebs.io/docs/quickstart-guide/prerequisites#minimum-worker-node-count
