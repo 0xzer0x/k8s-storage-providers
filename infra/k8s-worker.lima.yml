@@ -95,6 +95,12 @@ provision:
       vm.nr_hugepages = 1024
       EOF
       sysctl --system
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      if [ "$(systemctl is-enabled multipathd.service)" = "disabled" ]; then exit 0; fi
+      systemctl disable --now multipathd.service
 probes:
   - description: "kubeadm to be installed"
     script: |
