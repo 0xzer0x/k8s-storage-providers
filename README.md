@@ -332,11 +332,19 @@ kubectl apply -f storage-providers/openebs/pvc.k8s.yml
 
 <a name="references"></a>
 
-- [Introduction to Ceph - Sage Weil](https://www.youtube.com/watch?v=PmLPbrf-x9g)
-- [Ceph Docs - Architecture](https://docs.ceph.com/en/latest/architecture/)
-- [Longhorn Docs - Architecture](https://longhorn.io/docs/1.9.0/concepts/)
-- [Ceph vs Gluster vs Longhorn vs OpenEBS: Real-World Kubernetes Storage Comparison](https://kubedo.com/kubernetes-storage-comparison/)
-- [OpenEBS Mayastor vs Longhorn](https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/)
+_Architecture and concepts_. Longhorn Documentation. (n.d.). <https://longhorn.io/docs/1.9.0/concepts/>
+
+_Architecture_. Ceph Documentation. (n.d.). <https://docs.ceph.com/en/latest/architecture/>
+
+Lempa, C. (2024, November 12). _Storage and Backup in Kubernetes! // Longhorn Tutorial_. YouTube. <https://www.youtube.com/watch?v=-ImtLXcEna8>
+
+Nucleuss. (2025, June 13). _Kubernetes Storage Comparison: Ceph, Longhorn, OpenEBS & GlusterFS_. Kubedo Cloud. <https://kubedo.com/kubernetes-storage-comparison/>
+
+Team, E. (2022, February 10). _NVMe Over Fabrics (NVMe-oF) Explained_. Western Digital Corporate Blog. <https://blog.westerndigital.com/nvme-of-explained/>
+
+Weil, S. (2019, July 8). _2019-JUN-27 :: Ceph Tech Talk - Intro to Ceph_. YouTube. <https://www.youtube.com/watch?v=PmLPbrf-x9g>
+
+Wiggins, C. (2024, December 26). _OpenEBS Mayastor vs Longhorn_. Cwiggs. <https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/>
 
 [^1]: https://openebs.io/docs/quickstart-guide/prerequisites#minimum-worker-node-count
 
