@@ -308,22 +308,22 @@ kubectl get pods -n openebs
 ```sh
 # NOTE: validate block device link (should be pointing to /dev/vdb)
 for machine in k8s-controlplane k8s-worker-1 k8s-worker-2; do
-  limactl shell "${machine}" ll -lah /dev/disk/by-path
+  limactl shell "${machine}" ls -lah /dev/disk/by-path
 done
 # NOTE: create disk pool for each node containing attached disk (cannot use /dev/vdb)
-kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers/openebs/diskpool.k8s.yml
+kubectl apply -f storage-providers/openebs/diskpool.k8s.yml
 ```
 
 3. Create 3-replica storage class:
 
 ```sh
-kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers/openebs/storageclass.k8s.yml
+kubectl apply -f storage-providers/openebs/storageclass.k8s.yml
 ```
 
 4. Create PVC:
 
 ```sh
-kubectl apply -f ~/Workspace/learning/k8s/mastering-kubernetes/storage-providers/openebs/pvc.k8s.yml
+kubectl apply -f storage-providers/openebs/pvc.k8s.yml
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
