@@ -10,9 +10,14 @@ spec:
         - sleep
         - infinity
       volumeMounts:
-        - mountPath: /cephfs-volume
-          name: cephfs-volume
+        - name: cephfs-vol
+          mountPath: /cephfs-volume
+        - name: ceph-rbd-vol
+          mountPath: /ceph-rbd-volume
   volumes:
-    - name: cephfs-volume
+    - name: cephfs-vol
       persistentVolumeClaim:
         claimName: cephfs-pvc
+    - name: ceph-rbd-vol
+      persistentVolumeClaim:
+        claimName: ceph-rbd-pvc

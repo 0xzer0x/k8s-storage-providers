@@ -168,9 +168,12 @@ kubectl apply -f storage-providers/rook-ceph/cephcluster.k8s.yml
 watch kubectl get all -n rook-ceph
 ```
 
-3. Create a CephFS shared filesystem (RWX):
+3. Create a CephBlockPool for RBD (RWO) and CephFS shared filesystem (RWX):
 
 ```sh
+# NOTE: RBD
+kubectl apply -f storage-providers/rook-ceph/cephbp.k8s.yml
+# NOTE: CephFS
 kubectl apply -f storage-providers/rook-ceph/cephfs.k8s.yml
 # NOTE: wait for filesystem resource to be running
 kubectl get -n rook-ceph pods -w
@@ -179,22 +182,18 @@ kubectl get -n rook-ceph pods -w
 5. Create StorageClass for automatically provisioning volumes:
 
 ```sh
-kubectl apply -f storage-providers/rook-ceph/storageclass.k8s.yml
+kubectl apply -f storage-providers/rook-ceph/storageclass-rbd.k8s.yml
+kubectl apply -f storage-providers/rook-ceph/storageclass-cephfs.k8s.yml
 ```
 
-6. Create a PVC for utilizing the created storage class:
+6. Create a PVC for utilizing the created storage classes:
 
 ```sh
-kubectl apply -f storage-providers/rook-ceph/pvc.k8s.yml
+kubectl apply -f storage-providers/rook-ceph/pvc-rbd.k8s.yml
+kubectl apply -f storage-providers/rook-ceph/pvc-cephfs.k8s.yml
 ```
 
-9. Install troubleshooting toolbox for Ceph:
-
-```sh
-kubectl apply -f storage-providers/rook-ceph/toolbox.k8s.yml
-```
-
-10. Access the web UI through port-forwarding:
+9. Access the web UI through port-forwarding:
 
 ```sh
 kubectl -n rook-ceph port-forward svc/rook-ceph-mgr-dashboard 7000:7000 &>/dev/null &
@@ -202,6 +201,12 @@ kubectl -n rook-ceph port-forward svc/rook-ceph-mgr-dashboard 7000:7000 &>/dev/n
 # username: admin
 # password: <output of command below>
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath='{.data.password}' | base64 -d
+```
+
+10. Install troubleshooting toolbox for Ceph (optional):
+
+```sh
+kubectl apply -f storage-providers/rook-ceph/toolbox.k8s.yml
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
