@@ -38,7 +38,13 @@ This repo provides a starting point for evaluating different storage providers f
 
 <a name="cluster-preparation"></a>
 
-We will be using [Lima](https://lima-vm.io) for provisioning the Kubernetes cluster that we use for testing.
+We will be using [Lima](https://lima-vm.io) for provisioning the Kubernetes cluster that we use for testing. The provisioned VMs will have the following specs:
+
+| Node             | vCPU | Memory | Primary Disk | Additional Disk     | Notes              |
+| ---------------- | ---- | ------ | ------------ | ------------------- | ------------------ |
+| k8s-controlplane | 4    | 6 GiB  | 20 GiB       | `/dev/vdb` (10 GiB) | Control plane node |
+| k8s-worker-1     | 4    | 6 GiB  | 20 GiB       | `/dev/vdb` (10 GiB) | Worker node        |
+| k8s-worker-2     | 4    | 6 GiB  | 20 GiB       | `/dev/vdb` (10 GiB) | Worker node        |
 
 Create and configure cluster:
 
@@ -51,6 +57,10 @@ cd storage-providers/infra
 for dsk in controlplane worker-1 worker-2; do limactl disk create "${dsk}" --size=10GiB; done
 
 # NOTE: start VMs (edit workers to add their respective disks)
+# YAML:
+# additionalDisks:
+#   - name: worker-N
+#     format: false
 limactl start --name=k8s-controlplane ./k8s-controlplane.lima.yaml
 limactl start --name=k8s-worker-1 ./k8s-worker.lima.yaml
 limactl start --name=k8s-worker-2 ./k8s-worker.lima.yaml
