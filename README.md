@@ -365,6 +365,8 @@ Nucleuss. (2025, June 13). _Kubernetes Storage Comparison: Ceph, Longhorn, OpenE
 
 Team, E. (2022, February 10). _NVMe Over Fabrics (NVMe-oF) Explained_. Western Digital Corporate Blog. <https://blog.westerndigital.com/nvme-of-explained/>
 
+Weil, S. (2009, May 19). _The Rados Distributed Object Store_. Ceph. <https://ceph.io/en/news/blog/2009/the-rados-distributed-object-store/>
+
 Weil, S. (2019, July 8). _2019-JUN-27 :: Ceph Tech Talk - Intro to Ceph_. YouTube. <https://www.youtube.com/watch?v=PmLPbrf-x9g>
 
 Wiggins, C. (2024, December 26). _OpenEBS Mayastor vs Longhorn_. Cwiggs. <https://cwiggs.com/posts/2024-12-26-openebs-vs-longhorn/>
