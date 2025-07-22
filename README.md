@@ -116,6 +116,8 @@ Important metrics include:
 
 <a name="rook-and-ceph"></a>
 
+![rook-architecture-diagram](https://rook.io/docs/rook/latest-release/Getting-Started/ceph-storage/Rook%20High-Level%20Architecture.png)
+
 > **Reliable Autonomic Distributed Object Store (RADOS)**
 >
 > The core storage layer of Ceph. It is a self-healing, self-managing, intelligent distributed store designed to provide reliable, scalable storage.
@@ -225,6 +227,8 @@ kubectl apply -f storage-providers/rook-ceph/toolbox.k8s.yml
 
 <a name="longhorn"></a>
 
+![longhorn-architecture-diagram](https://longhorn.io/img/diagrams/architecture/how-longhorn-works-with-kubernetes.svg)
+
 Longhorn is an open-source, cloud-native solution for storage. It consists of the following components:
 
 - **Longhorn manager**: Running on all nodes as a `DaemonSet`, it is responsible for creating and managing volumes in the cluster and handling API calls from UI or CSI driver.
@@ -285,6 +289,8 @@ kubectl port-forward -n longhorn-system svc/longhorn-frontend 8080 &>/dev/null &
 
 <a name="openebs"></a>
 
+![openebs-architecture-diagram](https://openebs.io/docs/assets/images/openebs-hld-f23b6469fb4b16351a77fd4d7f53b083.svg)
+
 [OpenEBS](https://openebs.io/docs) is a Kubernetes-native storage solution that provides dynamic local and distributed block storage for containers. It is a CNCF sandbox project that allows Kubernetes users to provision Persistent Volumes (PVs) using Container Attached Storage (CAS) principles.
 
 OpenEBS follows a **modular architecture**, offering multiple storage engines optimized for different use cases:
@@ -301,7 +307,7 @@ OpenEBS core components are:
 ### Demo
 
 > [!WARNING]
-> The minimum required number of nodes for replicated mayastor to work is 3[^1].
+> The minimum required number of nodes for replicated Mayastor to work is 3[^1].
 
 1. Install OpenEBS mayastor engine using Helm:
 
@@ -350,6 +356,8 @@ kubectl apply -f storage-providers/openebs/pvc.k8s.yml
 _Architecture and concepts_. Longhorn Documentation. (n.d.). <https://longhorn.io/docs/1.9.0/concepts/>
 
 _Architecture_. Ceph Documentation. (n.d.). <https://docs.ceph.com/en/latest/architecture/>
+
+Kvapil, A. (2022, June 3). _Comparing Ceph, LINSTOR, Mayastor, and vitastor storage performance in kubernetes_. Palark Blog. <https://blog.palark.com/kubernetes-storage-performance-linstor-ceph-mayastor-vitastor/>
 
 Lempa, C. (2024, November 12). _Storage and Backup in Kubernetes! // Longhorn Tutorial_. YouTube. <https://www.youtube.com/watch?v=-ImtLXcEna8>
 
