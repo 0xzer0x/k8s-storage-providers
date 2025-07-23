@@ -172,7 +172,7 @@ helm install --create-namespace --namespace rook-ceph rook-ceph rook-release/roo
 kubectl -n rook-ceph get pods -w
 ```
 
-2. Create a single-node Ceph cluster (using Rook test configuration):
+2. Create a Ceph cluster (using Rook test configuration):
 
 ```sh
 kubectl apply -f storage-providers/rook-ceph/cephcluster.k8s.yml
